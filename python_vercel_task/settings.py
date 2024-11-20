@@ -33,7 +33,7 @@ DATABASES = {
 SUPABASE_HOST = os.getenv('SUPABASE_HOST')
 SUPABASE_PASSWORD = os.getenv('SUPABASE_PASSWORD')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 
 # Application definition
@@ -76,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'python_vercel_task.wsgi.application'
+WSGI_APPLICATION = 'python_vercel_task.wsgi.app'
 
 
 # Database
