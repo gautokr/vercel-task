@@ -11,19 +11,27 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv(dotenv_path=Path(BASE_DIR) / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tlv)36c^h%me#0j)!67193036i0(q!%)rm_9k19_&32jf9!t3b'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+DEBUG = os.getenv('DEBUG', default='False') == 'True'
+DATABASE_URL = os.getenv('DATABASE_URL', 'postgres://aws-0-sa-east-1.pooler.supabase.com:6543/postgres')
+DATABASES = {
+    'default': dj_database_url.config(default=DATABASE_URL)
+}
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SUPABASE_HOST = os.getenv('SUPABASE_HOST')
+SUPABASE_PASSWORD = os.getenv('SUPABASE_PASSWORD')
 
 ALLOWED_HOSTS = []
 
@@ -73,17 +81,6 @@ WSGI_APPLICATION = 'python_vercel_task.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'python_vercel_task',
-        'USER': 'sample_user',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
 
 
 # Password validation
